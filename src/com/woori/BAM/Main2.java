@@ -15,7 +15,7 @@ public class Main2 {
 		a.equals("asd");
 		boolean e;
 		String c = new String("asd"); //생성자가 다르기 때문에
-		String d = new String("as");
+		String d = new String("asd");
 		System.out.println(c == d); // 주소가 같은가?
 		System.out.println(e = c.equals(d)); // a.b 가진 값이 같은가?
 		if (e == true) {

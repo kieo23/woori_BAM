@@ -15,7 +15,7 @@ public class Main {
 			// Scanner(System.in); = 생성자
 			System.out.printf("cmd) ");
 			String cmd = sc.nextLine(); //cmd 변수 ==> 재사용하기 위해
-			System.out.println(cmd);
+//			System.out.println(cmd);
 			if (cmd.equals("exit")) {
 				break;
 			}
