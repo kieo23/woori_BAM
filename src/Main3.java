@@ -1,4 +1,3 @@
-import java.security.DrbgParameters.NextBytes;
 import java.util.Scanner;
 
 public class Main3 {
@@ -10,6 +9,8 @@ public static void main(String[] args) {
 //	int i = 0;
 //	String b = null;
 //	String c = null;
+	a테스트.실리 = a테스트.실행(15);
+	System.out.println(a테스트.실리);
 //	
 //	String[] arr = new String[4];
 ////	a = sc.nextInt();
@@ -53,16 +54,16 @@ public static void main(String[] args) {
 //		for (String f : arr2) {
 //			System.out.println("2번째 배열 : " + f);
 //		}
-	System.out.println("몇번 입력할지 정하시오.");
-		int asb = sc.nextInt();
-		int [] arr3 = new int[asb];
-		System.out.println("입력하신 반복 횟수 : " + asb);
-		for (int test : arr3) {
-			test = sc.nextInt();
-			System.out.println(test + " : 입력하신 숫자");
-			
-		}
-		
+//	System.out.println("몇번 입력할지 정하시오.");
+//		int asb = sc.nextInt();
+//		int [] arr3 = new int[asb];
+//		System.out.println("입력하신 반복 횟수 : " + asb);
+//		for (int test : arr3) {
+//			test = sc.nextInt();
+//			System.out.println(test + " : 입력하신 숫자");
+//			
+//		}
+//		
 		
 //	b = sc.nextLine();
 //	System.out.println(b);
@@ -74,10 +75,13 @@ public static void main(String[] args) {
 }
 
 class 테스트 {
+	int 실리;
 	String arr3;
 	
 			
-void 실행 () {
+int 실행 (int i) {
+	i -= 15;
+	return i;
 	
 }
 }
