@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main3 {
+public class MainTest {
 public static void main(String[] args) {
 
 	테스트 a테스트 = new 테스트();
