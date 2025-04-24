@@ -1,5 +1,7 @@
 package com.woori.BAM;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,6 +12,8 @@ public class Main3 {
 		// 참고용으로 이해한 것 주석으로 처리
 		System.out.println("== 프로그램 시작 ==");
 		Scanner sc = new Scanner(System.in); // 스캐너 선언
+		LocalDate now = LocalDate.now(); //날짜개념 부름
+		LocalTime niw = LocalTime.now(); //시간개념 부름
 
 		// 클래스 리모컨 = (생성자)new 객체;
 
@@ -17,6 +21,7 @@ public class Main3 {
 		// 이곳까지 1회실행후 while 반복문 시작
 		List<Article> articles = new ArrayList<>();// 뒷 <>는 생략가능
 //		List<Article> articles = new ArrayList<Article>();
+//		Number number = new Number();
 
 		while (true) { // 무한 반복문 시작
 			System.out.printf("명령어) ");
@@ -55,6 +60,9 @@ public class Main3 {
 						//현재 역방향 출력으로 되어 있음
 						//정방향 for (int i = 0; i < article.size(); i++)
 						Article article = articles.get(i);
+						
+						// aritcle은 article.get() 을 통해 받은 객체를 재사용하기위해
+						
 						System.out.printf("%d    |    %\n", article.id, article.title, article.body);
 						continue;
 						//article = articles.get(i)로 인덱스 값에 따라 새로 선언된 리모컨
@@ -67,6 +75,27 @@ public class Main3 {
 					// 게시글 확인 절차
 					continue;
 				}
+			}
+			if (cmd.startsWith("article detail ")) { //article detail 로 시작하니
+				if (articles.size() < 1 ) {
+					System.out.printf("%d번 게시물이 존재하지 않습니다\n",id);
+					String[] cmdBits = cmd.split(" ");
+					System.out.println(cmdBits[0]);
+					System.out.println(cmdBits[1]);
+					System.out.println(cmdBits[2]);
+					continue;
+					
+			} else if (articles.size() >= 1) {
+				System.out.printf("번호 : %d\n",id);
+				System.out.println("날짜 :" + now);
+				System.out.println("제목 : " + articles.get(id).title);
+				System.out.println("내용 : " + articles.get(id).body);
+				
+//				Article article = articles.get(여기에 입력한 번호);
+//				System.out.printf("번호 : %d",Article.class);
+			}	
+			}
+				//1번 인수를 간변적으로 하여서  숫자가 들어오면 반응하게 해야함.
 
 				if (cmd.equals("article write")) {
 
@@ -114,12 +143,10 @@ public class Main3 {
 					System.out.println("존재하지 않는 명령어 입니다");
 					// 모든 if문이 false처리가 된다면 else 문장 실행
 				}
-			}
-
+		}
 			sc.close();
 			System.out.println("== 프로그램 종료 ==");
 			// 종료 메세지후 자바 출력 끝냄
-		}
 
 	}
 }
@@ -135,5 +162,11 @@ class Article {
 		this.id = id; // 객체에 가져온 값을 저장한다.
 		this.title = title;
 		this.body = body;
+	}
+}
+class Number {
+	int id;
+	public Number(int i) {
+		
 	}
 }
