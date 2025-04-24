@@ -39,7 +39,7 @@ public class Main3 {
 
 			if (cmd.equals("article list")) {
 //				if (id >= 2) {
-				if (articles.size() <= 1) {
+				if (articles.size() >= 1) {
 					// 번호 및 제목을 불러와야함
 					// 그런데 제목은 article에 저장되어 있음
 
@@ -55,7 +55,7 @@ public class Main3 {
 					// 첫 번째 방법이나 최적화가 안되어 있음
 
 					// 배열 사용해서 get() 사용 ==> 객체를 리턴(불러오기) 받음
-					System.out.printf("번호     |    제목'n");
+					System.out.printf("번호     |    제목\n");
 					for (int i = articles.size() -1 ; i>= 0; i--) {
 						//현재 역방향 출력으로 되어 있음
 						//정방향 for (int i = 0; i < article.size(); i++)
@@ -63,13 +63,13 @@ public class Main3 {
 						
 						// aritcle은 article.get() 을 통해 받은 객체를 재사용하기위해
 						
-						System.out.printf("%d    |    %\n", article.id, article.title, article.body);
-						continue;
+						System.out.printf("%d        |    %s\n", article.id, article.title);
 						//article = articles.get(i)로 인덱스 값에 따라 새로 선언된 리모컨
 						//article.id등으로 클래스내의 변수를 가져온다
 					}
+					continue;
 				}
-				if (articles.size() == 0) {
+				else if (articles.size() == 0) {
 					// 게시글이 1개이상 존재하면 x 2 1
 					System.out.println("존재하는 게시글이 없습니다");
 					// 게시글 확인 절차
