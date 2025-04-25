@@ -80,7 +80,8 @@ public class Main3 {
 			if (cmd.startsWith("article detail ")) { //article detail 로 시작하니
 				if (articles.size() < 1 ) {
 					System.out.printf("%d번 게시물이 존재하지 않습니다\n",id);
-					String[] cmdBits = cmd.split(" ");
+					String[] cmdBits = cmd.split(" "); //문자 쪼개기 / 쪼갤단위 집어넣기 (,) (" ") (":")
+													   // Data 전
 					System.out.println(cmdBits[0]);
 					System.out.println(cmdBits[1]);
 					System.out.println(cmdBits[2]);
