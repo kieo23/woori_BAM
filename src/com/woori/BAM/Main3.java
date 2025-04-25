@@ -68,6 +68,7 @@ public class Main3 {
 						//article.id등으로 클래스내의 변수를 가져온다
 					}
 					continue;
+					
 				}
 				else if (articles.size() == 0) {
 					// 게시글이 1개이상 존재하면 x 2 1
