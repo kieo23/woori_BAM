@@ -56,51 +56,96 @@ public class Main4 {
 //				System.out.println(cmdBits[0]);
 //				System.out.println(cmdBits[1]);
 //				System.out.println(cmdBits[2]);
-				
+
 //				int checkIdNum = 0;
-				
-				
+
 				int id;
 				try { // Exception ㅂ라생 할 예상 코드 블럭
 					id = Integer.parseInt(cmdBits[2]);
 //					checkIdNum = id;
-					
+
 				} catch (NumberFormatException e) {
-					//그밖에 모든 Exscpion 처리한다.
+					// 그밖에 모든 Exscpion 처리한다.
 					System.out.println("조회하는 게시물의 숫자가 입력되지 않음.");
 					continue;
 //				} finally { //밥 먹고와서 변수없이 실행하는법 찾아보기
-					
+
 //					System.out.println("조회 하려는 게시물의 번호를 제대로 써주세요");
 				}
 //				boolean articleChk = false;
 				Article foundAticle = null;
 				for (Article article : articles) {
 
-					if ( article.id == id) { 
-						foundAticle = article; //부른 cmdbits가 맞다면 null값을 덮어씀
+					if (article.id == id) {
+						foundAticle = article; // 부른 cmdbits가 맞다면 null값을 덮어씀
 						break;
 					}
 				}
-				
+
 				if (foundAticle == null) {
-					System.out.println(id+"번에 해당하는 게시물 없음");
-					continue; //매우매우 중요. 아래에서 NullPointException 발생 안되게 조치
-				}// null값이 아니라면 아래 출력.
+					System.out.println(id + "번에 해당하는 게시물 없음");
+					continue; // 매우매우 중요. 아래에서 NullPointException 발생 안되게 조치
+				} // null값이 아니라면 아래 출력.
 				System.out.println("번호 : " + foundAticle.id);
 				System.out.println("날짜 : " + "랄라이");
 				System.out.println("제목 : " + foundAticle.title);
 				System.out.println("내용 : " + foundAticle.body);
-			} else {
+			} else if (cmd.startsWith("article delete ")) {
+				String[] cmdBits = cmd.split(" ");
+				int id = 0;
+				Article foundAticle = null;
+
+				id = Integer.parseInt(cmdBits[2]);
+				for (Article article : articles) {
+					if (article.id == id) {
+						foundAticle = article;
+						articles.remove(id - 1);
+						System.out.println(id + "번의 게시물이 삭제되었습니다");
+						System.out.println(articles.isEmpty());
+						break;
+					}
+					if (foundAticle == null) {
+						System.out.println(id + "번 게시물이 존재하지 않습니다.");
+						continue;
+				
+					} 
+
+				}
+			} else if (cmd.startsWith("article modify ")) {
+				String[] cmdBits = cmd.split(" ");
+				int id = 0;
+				Article foundAticle = null;
+				
+				id = Integer.parseInt(cmdBits[2]);
+				for (Article article : articles) {
+					if (article.id == id) {
+						foundAticle = article;
+						System.out.printf("수정할 제목 : ");
+						String correctionTitle = sc.nextLine();
+						article.title = correctionTitle;
+						System.out.print("수정할 내용 : ");
+						String correctionBody = sc.nextLine();
+						article.body = correctionBody;
+						System.out.println("수정완료");
+						break;
+						
+					}
+				}
+				if (foundAticle == null) {
+					System.out.println(id + "번 게시물이 존재하지 않습니다.");
+					continue;
+			}
+			}
+			else {
 				System.out.println("존재하지 않는 명령어 입니다");
 			}
 		}
-		
 		
 		sc.close();
 		System.out.println("== 프로그램 종료 ==");
 	}
 }
+
 
 class Article {
 	int id;
