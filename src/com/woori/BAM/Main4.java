@@ -57,19 +57,30 @@ public class Main4 {
 //				System.out.println(cmdBits[1]);
 //				System.out.println(cmdBits[2]);
 				
-				int id = Integer.parseInt(cmdBits[2]);
-
+//				int checkIdNum = 0;
+				int id;
+				try { // Exception ㅂ라생 할 예상 코드 블럭
+					id = Integer.parseInt(cmdBits[2]);
+//					checkIdNum = id;
+					
+				} catch (NumberFormatException e) {
+					//그밖에 모든 Exscpion 처리한다.
+					System.out.println("조회하는 게시물의 숫자가 입력되지 않음.");
+					continue;
+//				} finally { //밥 먹고와서 변수없이 실행하는법 찾아보기
+					
+//					System.out.println("조회 하려는 게시물의 번호를 제대로 써주세요");
+				}
 //				boolean articleChk = false;
 				Article foundAticle = null;
 				for (Article article : articles) {
 
-					if ( article.id == id) {
+					if ( article.id == id) { 
 						foundAticle = article; //부른 cmdbits가 맞다면 null값을 덮어씀
-						
-						
 						break;
 					}
 				}
+				
 				if (foundAticle == null) {
 					System.out.println(id+"번에 해당하는 게시물 없음");
 					continue; //매우매우 중요. 아래에서 NullPointException 발생 안되게 조치
@@ -82,6 +93,8 @@ public class Main4 {
 				System.out.println("존재하지 않는 명령어 입니다");
 			}
 		}
+		
+		
 		sc.close();
 		System.out.println("== 프로그램 종료 ==");
 	}
