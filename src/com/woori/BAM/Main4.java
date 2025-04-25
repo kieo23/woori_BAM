@@ -58,6 +58,8 @@ public class Main4 {
 //				System.out.println(cmdBits[2]);
 				
 //				int checkIdNum = 0;
+				
+				
 				int id;
 				try { // Exception ㅂ라생 할 예상 코드 블럭
 					id = Integer.parseInt(cmdBits[2]);
