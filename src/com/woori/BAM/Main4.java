@@ -38,7 +38,7 @@ public class Main4 {
 				String title = sc.nextLine().trim();
 				System.out.printf("내용 : ");
 				String body = sc.nextLine().trim();
-				int viewCheck = 0;
+				int viewCheck = 0; //새로 생성시 0으로 시작하도록 함
 
 				
 				Util.getDateStr();
@@ -106,7 +106,7 @@ public class Main4 {
 					continue; // 매우매우 중요. 아래에서 NullPointException 발생 안되게 조치
 				} // null값이 아니라면 아래 출력.
 				
-				foundArticle.viewCheck++;
+				foundArticle.viewCheck++; //조회수 1씩 증가
 				System.out.println("번호 : " + foundArticle.id);
 				System.out.println("날짜 : " + foundArticle.regDate);
 				System.out.println("제목 : " + foundArticle.title);
