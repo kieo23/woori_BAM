@@ -23,7 +23,7 @@ public class Main4 {
 			}
 			
 			int id = 0;
-			Article foundAticle = null;
+			Article foundArticle = null;
 			
 			if (cmd.length() == 0) {
 				System.out.println("명령어를 입력해 주세요");
@@ -51,10 +51,10 @@ public class Main4 {
 
 				}
 
-				System.out.printf("번호    |     제목\n");
+				System.out.printf("번호    |     제목     |     내용\n");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d       |     %s\n", article.id, article.title);
+					System.out.printf("%d       |     %s       |     %s\n", article.id, article.title,article.body);
 				}
 			} else if (cmd.startsWith("article detail ")) { // article detail 로 시작하니?
 				String[] cmdBits = cmd.split(" "); // 문자 쪼개기칸
@@ -83,21 +83,21 @@ public class Main4 {
 				for (Article article : articles) {
 
 					if (article.id == id) {
-						foundAticle = article; // 부른 cmdbits가 맞다면 null값을 덮어씀
+						foundArticle = article; // 부른 cmdbits가 맞다면 null값을 덮어씀
 						break;
 					}
 				}
 
-				if (foundAticle == null) {
+				if (foundArticle == null) {
 					System.out.println(id + "번에 해당하는 게시물 없음");
 					continue; // 매우매우 중요. 아래에서 NullPointException 발생 안되게 조치
 				} // null값이 아니라면 아래 출력.
 				
 				
-				System.out.println("번호 : " + foundAticle.id);
-				System.out.println("날짜 : " + today);
-				System.out.println("제목 : " + foundAticle.title);
-				System.out.println("내용 : " + foundAticle.body);
+				System.out.println("번호 : " + foundArticle.id);
+				System.out.println("날짜 : " + "오늘날");
+				System.out.println("제목 : " + foundArticle.title);
+				System.out.println("내용 : " + foundArticle.body);
 			} else if (cmd.startsWith("article delete ")) {
 				String[] cmdBits = cmd.split(" ");
 //				int id = 0;
@@ -117,11 +117,11 @@ public class Main4 {
 						articles.remove(id - 1);
 						System.out.println(id + "번의 게시물이 삭제되었습니다");
 //						System.out.println(articles.isEmpty());
-						foundAticle = article;
+						foundArticle = article;
 						break;
 					}
 					}
-					if (foundAticle == null) {
+					if (foundArticle == null) {
 						System.out.println(id + "번 게시물이 존재하지 않습니다.");
 						continue;
 				
@@ -144,19 +144,28 @@ public class Main4 {
 				
 				for (Article article : articles) { //배열을 순서대로 돌림
 					if (article.id == id) { //순서가 일치할때 해당 인덱스의 정보 수정
-						foundAticle = article;
+						foundArticle = article; //주소가 같기에 foundArticle, article 같은 주소가된다
+						
+//						System.out.printf("수정할 제목 : ");
+//						String correctionTitle = sc.nextLine().trim();
+//						foundArticle.title = correctionTitle; //두가지 모두 주소가 같기에 상관없다
+//						System.out.print("수정할 내용 : ");
+//						String correctionBody = sc.nextLine().trim();
+//						article.body = correctionBody;
+						
 						System.out.printf("수정할 제목 : ");
-						String correctionTitle = sc.nextLine();
-						article.title = correctionTitle;
-						System.out.print("수정할 내용 : ");
-						String correctionBody = sc.nextLine();
-						article.body = correctionBody;
+						foundArticle.title = sc.nextLine().trim();  //foundArticle와 article는 주소가 같도록 선언함
+						System.out.printf("수정할 내용 : ");
+						article.body = sc.nextLine().trim();  // 따라서 불러오는 값은 같음
+						
+						
+						
 						System.out.println("수정완료");
 						break;
 						
 					}
 				}
-				if (foundAticle == null) {
+				if (foundArticle == null) {
 					System.out.println(id + "번 게시물이 존재하지 않습니다.");
 					continue;
 			}
