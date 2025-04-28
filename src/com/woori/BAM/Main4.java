@@ -38,6 +38,7 @@ public class Main4 {
 				String title = sc.nextLine().trim();
 				System.out.printf("내용 : ");
 				String body = sc.nextLine().trim();
+				int check = 0;
 
 				
 				Util.getDateStr();
@@ -47,7 +48,7 @@ public class Main4 {
 				
 				
 //				Article article = new Article(lastArticleId, title, body,regDate);
-				Article article = new Article(lastArticleId, title, body,Util.getDateStr());
+				Article article = new Article(lastArticleId, check, title, body,Util.getDateStr());
 				articles.add(article);
 				
 
@@ -61,12 +62,12 @@ public class Main4 {
 					continue;
 
 				}
-
-				System.out.printf("번호    |     제목     |     내용     |     날짜\n");
+				
+				System.out.printf("번호    |     제목     |     내용     |     날짜          |      조회수\n");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
 //					System.out.printf("%d       |     %s       |     %s     |     %s, %s\n", article.id, article.title,article.body,calendar.get(article.id-1),timeMake);
-					System.out.printf("%d       |     %s       |     %s     |     %s     \n", article.id, article.title,article.body,article.regDate);
+					System.out.printf("%d       |     %s       |     %s     |     %s     %d\n", article.id, article.title,article.body,article.regDate,article.check);
 				}
 			} else if (cmd.startsWith("article detail ")) { // article detail 로 시작하니?
 				String[] cmdBits = cmd.split(" "); // 문자 쪼개기칸
@@ -105,11 +106,13 @@ public class Main4 {
 					continue; // 매우매우 중요. 아래에서 NullPointException 발생 안되게 조치
 				} // null값이 아니라면 아래 출력.
 				
-				
+				foundArticle.check++;
 				System.out.println("번호 : " + foundArticle.id);
 				System.out.println("날짜 : " + foundArticle.regDate);
 				System.out.println("제목 : " + foundArticle.title);
 				System.out.println("내용 : " + foundArticle.body);
+				System.out.println("조회수 : " + foundArticle.check);
+				
 			} else if (cmd.startsWith("article delete ")) {
 				String[] cmdBits = cmd.split(" ");
 //				int id = 0;
@@ -198,11 +201,13 @@ class Article {
 	String title;
 	String body;
 	String regDate;
+	int check;
 
-	public Article(int id, String title, String body, String regDate) {
+	public Article(int id, int check,String title, String body, String regDate) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 		this.regDate = regDate;
+		this.check = check;
 	}
 }
