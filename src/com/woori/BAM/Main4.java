@@ -1,7 +1,9 @@
 package com.woori.BAM;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+//import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,11 +11,10 @@ public class Main4 {
 	public static void main(String[] args) {
 		System.out.println("== 프로그램 시작 ==");
 		Scanner sc = new Scanner(System.in);
-		Date today = new Date();
 
 		int lastArticleId = 1; // 게시글 번호, 마지막 게시글 번호 수정
 		List<Article> articles = new ArrayList<>();
-
+		
 		while (true) {
 			System.out.printf("명령어) ");
 			String cmd = sc.nextLine().trim();
@@ -24,6 +25,7 @@ public class Main4 {
 			
 			int id = 0;
 			Article foundArticle = null;
+			
 			
 			if (cmd.length() == 0) {
 				System.out.println("명령어를 입력해 주세요");
@@ -37,8 +39,17 @@ public class Main4 {
 				System.out.printf("내용 : ");
 				String body = sc.nextLine().trim();
 
-				Article article = new Article(lastArticleId, title, body);
+				
+				Util.getDateStr();
+//				LocalDateTime now = LocalDateTime.now(); //시간 설정
+//				String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+//				String regDate = formatedNow;
+				
+				
+//				Article article = new Article(lastArticleId, title, body,regDate);
+				Article article = new Article(lastArticleId, title, body,Util.getDateStr());
 				articles.add(article);
+				
 
 				System.out.println(lastArticleId + "번글이 생성되었습니다");
 				lastArticleId++;
@@ -51,10 +62,11 @@ public class Main4 {
 
 				}
 
-				System.out.printf("번호    |     제목     |     내용\n");
+				System.out.printf("번호    |     제목     |     내용     |     날짜\n");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d       |     %s       |     %s\n", article.id, article.title,article.body);
+//					System.out.printf("%d       |     %s       |     %s     |     %s, %s\n", article.id, article.title,article.body,calendar.get(article.id-1),timeMake);
+					System.out.printf("%d       |     %s       |     %s     |     %s     \n", article.id, article.title,article.body,article.regDate);
 				}
 			} else if (cmd.startsWith("article detail ")) { // article detail 로 시작하니?
 				String[] cmdBits = cmd.split(" "); // 문자 쪼개기칸
@@ -95,7 +107,7 @@ public class Main4 {
 				
 				
 				System.out.println("번호 : " + foundArticle.id);
-				System.out.println("날짜 : " + "오늘날");
+				System.out.println("날짜 : " + foundArticle.regDate);
 				System.out.println("제목 : " + foundArticle.title);
 				System.out.println("내용 : " + foundArticle.body);
 			} else if (cmd.startsWith("article delete ")) {
@@ -185,10 +197,12 @@ class Article {
 	int id;
 	String title;
 	String body;
+	String regDate;
 
-	public Article(int id, String title, String body) {
+	public Article(int id, String title, String body, String regDate) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
+		this.regDate = regDate;
 	}
 }
