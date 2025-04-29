@@ -8,19 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.plaf.nimbus.AbstractRegionPainter;
+
 public class Main4 {
+	static List<Article> articles = new ArrayList<>();
+	
+	static int lastArticleId = 1; // 게시글 번호, 마지막 게시글 번호 수정
 	public static void main(String[] args) {
 		System.out.println("== 프로그램 시작 ==");
 		Scanner sc = new Scanner(System.in);
 
-		List<Article> articles = new ArrayList<>();
+		
+		makeTestData();
+		
+//		Article ar = new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용2", 10);
 
-		int lastArticleId = 1; // 게시글 번호, 마지막 게시글 번호 수정
 		// 10번 반복
-		for (int i = 1; i <= 10; i++) {
-			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
-
-		}
+//		for (int i = 1; i <= 10; i++) {
+//			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
+//
+//		}
 
 		while (true) {
 			System.out.printf("명령어) ");
@@ -168,6 +175,19 @@ public class Main4 {
 
 		sc.close();
 		System.out.println("== 프로그램 종료 ==");
+	}
+
+	private static void makeTestData() {
+//		Article ar = new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용2", 10);
+
+		// 10번 반복
+		for (int i = 1; i <= 10; i++) {
+			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
+			
+			
+		}
+
+		
 	}
 }
 
