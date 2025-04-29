@@ -1,5 +1,6 @@
 package com.woori.BAM;
 
+import java.awt.print.Printable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 //import java.time.LocalTime;
@@ -12,9 +13,55 @@ public class Main4 {
 		System.out.println("== 프로그램 시작 ==");
 		Scanner sc = new Scanner(System.in);
 
-		int lastArticleId = 1; // 게시글 번호, 마지막 게시글 번호 수정
+//		TestDate testdate = new TestDate();
+//		Article articlelist = new Article(lastArticleId, viewCheck, title, body,Util.getDateStr());
+		
 		List<Article> articles = new ArrayList<>();
 		
+//		int te = 0;
+		int lastArticleId = 1; // 게시글 번호, 마지막 게시글 번호 수정
+//		int testId = 0;
+//		int testViewCheck = 0;
+//		String testTitle = "제목";
+//		String testBody = null;
+		
+		
+//		Article ar1 = new Article(lastArticleId++,Util.getDateStr(),"제목1", "내용1", 10);
+//		articles.add(ar1);
+//		lastArticleId++;
+//		Article ar2 = new Article(lastArticleId++,Util.getDateStr(),"제목2", "내용2", 20);
+//		articles.add(ar2);
+//		lastArticleId++;
+//		Article ar3 = new Article(lastArticleId++,Util.getDateStr(),"제목3", "내용3", 30);
+//		articles.add(ar3);
+//		lastArticleId++;
+		
+		
+		//10번 반복
+		for (int i = 1; i <= 10; i++) {
+			articles.add(new Article(lastArticleId++,Util.getDateStr(),"제목"+ i, "내용"+ i, i * 10));
+			
+		}
+		
+		
+//		articles.add(new Article(lastArticleId++,Util.getDateStr(),"제목1", "내용1", 10));
+//		articles.add(new Article(lastArticleId++,Util.getDateStr(),"제목2", "내용2", 20));
+//		articles.add(new Article(lastArticleId++,Util.getDateStr(),"제목3", "내용3", 30));
+		//최적화 2번 거침
+		
+//		List<TestDate> articlesTest = new ArrayList<>();
+//		
+//		for(int i = 1; i < 4; i++) {
+//			testViewCheck += 10;
+//			testId += 1;
+//			testTitle = "제목"+(te++);
+//			testBody = "내용"+(te++);
+//		testdate.Reset(testId, testViewCheck, testTitle, testBody,Util.getDateStr());
+//		articlesTest.add(testdate);
+//		}
+//		for (TestDate t : articlesTest) {
+//		System.out.printf("%d %s %s %d %s \n",t.testId,t.testTitle,t.testBody,t.testViewCek,t.testRegDate);
+//		}
 		while (true) {
 			System.out.printf("명령어) ");
 			String cmd = sc.nextLine().trim();
@@ -48,7 +95,7 @@ public class Main4 {
 				
 				
 //				Article article = new Article(lastArticleId, title, body,regDate);
-				Article article = new Article(lastArticleId, viewCheck, title, body,Util.getDateStr());
+				Article article = new Article(lastArticleId,Util.getDateStr(),title, body, viewCheck);
 				articles.add(article);
 				
 
@@ -63,11 +110,11 @@ public class Main4 {
 
 				}
 				
-				System.out.printf("번호    |     제목     |     내용     |     날짜          |      조회수\n");
+				System.out.printf("번호    |     제목        |     내용      |                  날짜              |   조회수\n");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
 //					System.out.printf("%d       |     %s       |     %s     |     %s, %s\n", article.id, article.title,article.body,calendar.get(article.id-1),timeMake);
-					System.out.printf("%d       |     %s       |     %s     |     %s     %d\n", article.id, article.title,article.body,article.regDate,article.viewCheck);
+					System.out.printf("%d       |     %s       |     %s     |     %s|     %d\n", article.id, article.title,article.body,article.regDate,article.viewCheck);
 				}
 			} else if (cmd.startsWith("article detail ")) { // article detail 로 시작하니?
 				String[] cmdBits = cmd.split(" "); // 문자 쪼개기칸
@@ -203,7 +250,7 @@ class Article {
 	String regDate;
 	int viewCheck;
 
-	public Article(int id, int viewCheck,String title, String body, String regDate) {
+	public Article(int id, String regDate,String title, String body,int viewCheck) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
@@ -211,3 +258,33 @@ class Article {
 		this.viewCheck = viewCheck;
 	}
 }
+class TestDate {
+	
+	int number = 0;
+	int testId;
+	String testRegDate;
+	String testTitle;
+	String testBody;
+	int testViewCek;
+//	public TestDate (int testId, int testViewCek, String testTitle, String testBody, String testRegDate) {
+//		this.testId = testId;
+//		this.testRegDate = testRegDate;
+//		this.testTitle = testTitle;
+//		this.testBody = testBody;
+//		this.testViewCek = testViewCek;
+		void Reset (int testId, int testViewCek, String testTitle, String testBody, String testRegDate){
+//			testViewCek += 10;
+//			testId += 1;
+//			testTitle = "제목"+(number++);
+//			testBody = "내용"+(number++);
+			this.testId = testId;
+			this.testRegDate = testRegDate;
+			this.testTitle = testTitle;
+			this.testBody = testBody;
+			this.testViewCek = testViewCek;
+
+			
+		}
+			
+		}
+
