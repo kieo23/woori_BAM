@@ -1,25 +1,31 @@
 package com.woori.BAM;
 
-import java.awt.print.Printable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 //import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.plaf.nimbus.AbstractRegionPainter;
+import com.woori.BAM.dto.Article;
+import com.woori.BAM.util.Util;
 
 public class Main4 {
-	static List<Article> articles = new ArrayList<>();
+//	static Article arc = new Article();
+	static List<Article> articles ;
+	static int lastArticleId ; // 게시글 번호, 마지막 게시글 번호 수정
+	//시작하자마자 선언 및 초기화
 	
-	static int lastArticleId = 1; // 게시글 번호, 마지막 게시글 번호 수정
+	static { //기본 생성자, 초기화, 관례 and 가독성 증가
+		articles = new ArrayList<>();
+		lastArticleId = 1;
+	}
+	
+	
 	public static void main(String[] args) {
 		System.out.println("== 프로그램 시작 ==");
 		Scanner sc = new Scanner(System.in);
 
 		
-		makeTestData();
+		makeTestData(); // 중요 --> static 메소드일수밖에 없는 이유
 		
 //		Article ar = new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용2", 10);
 
@@ -73,8 +79,8 @@ public class Main4 {
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
 //					System.out.printf("%d       |     %s       |     %s     |     %s, %s\n", article.id, article.title,article.body,calendar.get(article.id-1),timeMake);
-					System.out.printf("%d       |     %s       |     %s     |     %s|     %d\n", article.id,
-							article.title, article.body, article.regDate, article.viewCheck);
+					System.out.printf("%d       |     %s       |     %s     |     %s|     %d\n", article.getId(),
+							article.getTitle(), article.getBody(), article.getRegDate(), article.getViewCheck());
 				}
 			} else if (cmd.startsWith("article detail ")) { // article detail 로 시작하니?
 				String[] cmdBits = cmd.split(" "); // 문자 쪼개기칸
@@ -92,7 +98,7 @@ public class Main4 {
 
 				for (Article article : articles) {
 
-					if (article.id == id) {
+					if (article.getId() == id) {
 						foundArticle = article; // 부른 cmdbits가 맞다면 null값을 덮어씀
 						break;
 					}
@@ -103,12 +109,12 @@ public class Main4 {
 					continue; // 매우매우 중요. 아래에서 NullPointException 발생 안되게 조치
 				} // null값이 아니라면 아래 출력.
 
-				foundArticle.viewCheck++; // 조회수 1씩 증가
-				System.out.println("번호 : " + foundArticle.id);
-				System.out.println("날짜 : " + foundArticle.regDate);
-				System.out.println("제목 : " + foundArticle.title);
-				System.out.println("내용 : " + foundArticle.body);
-				System.out.println("조회수 : " + foundArticle.viewCheck);
+				foundArticle.setViewCheck(foundArticle.getViewCheck() + 1); // 조회수 1씩 증가
+				System.out.println("번호 : " + foundArticle.getId());
+				System.out.println("날짜 : " + foundArticle.getRegDate());
+				System.out.println("제목 : " + foundArticle.getTitle());
+				System.out.println("내용 : " + foundArticle.getBody());
+				System.out.println("조회수 : " + foundArticle.getViewCheck());
 
 			} else if (cmd.startsWith("article delete ")) {
 				String[] cmdBits = cmd.split(" ");
@@ -124,7 +130,7 @@ public class Main4 {
 					e.printStackTrace();
 				}
 				for (Article article : articles) {
-					if (article.id == id) {
+					if (article.getId() == id) {
 						articles.remove(id - 1);
 						System.out.println(id + "번의 게시물이 삭제되었습니다");
 //						System.out.println(articles.isEmpty());
@@ -151,13 +157,13 @@ public class Main4 {
 				}
 
 				for (Article article : articles) { // 배열을 순서대로 돌림
-					if (article.id == id) { // 순서가 일치할때 해당 인덱스의 정보 수정
+					if (article.getId() == id) { // 순서가 일치할때 해당 인덱스의 정보 수정
 						foundArticle = article; // 주소가 같기에 foundArticle, article 같은 주소가된다
 
 						System.out.printf("수정할 제목 : ");
-						foundArticle.title = sc.nextLine().trim(); // foundArticle와 article는 주소가 같도록 선언함
+						foundArticle.setTitle(sc.nextLine().trim()); // foundArticle와 article는 주소가 같도록 선언함
 						System.out.printf("수정할 내용 : ");
-						article.body = sc.nextLine().trim(); // 따라서 불러오는 값은 같음
+						article.setBody(sc.nextLine().trim()); // 따라서 불러오는 값은 같음
 
 						System.out.println("수정완료");
 						break;
@@ -181,7 +187,7 @@ public class Main4 {
 //		Article ar = new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용2", 10);
 
 		// 10번 반복
-		for (int i = 1; i <= 10; i++) {
+		for (int i = 1; i <= 5; i++) {
 			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
 			
 			
@@ -191,21 +197,21 @@ public class Main4 {
 	}
 }
 
-class Article {
-	int id;
-	String title;
-	String body;
-	String regDate;
-	int viewCheck;
-
-	public Article(int id, String regDate, String title, String body, int viewCheck) {
-		this.id = id;
-		this.title = title;
-		this.body = body;
-		this.regDate = regDate;
-		this.viewCheck = viewCheck;
-	}
-}
+//class Article {
+//	int id;
+//	String title;
+//	String body;
+//	String regDate;
+//	int viewCheck;
+//
+//	public Article(int id, String regDate, String title, String body, int viewCheck) {
+//		this.id = id;
+//		this.title = title;
+//		this.body = body;
+//		this.regDate = regDate;
+//		this.viewCheck = viewCheck;
+//	}
+//}
 //class TestDate {
 //	
 //	int number = 0;
