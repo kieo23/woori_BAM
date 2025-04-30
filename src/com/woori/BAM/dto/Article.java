@@ -1,6 +1,6 @@
 package com.woori.BAM.dto;
 
-public class Article {
+public class Article { //공개된 클래스의 세부 내용은 비공개로 처리한다
 	private int id;
 	private String title;
 	private String body;
@@ -13,9 +13,14 @@ public class Article {
 		this.setBody(body);
 		this.setRegDate(regDate);
 		this.setViewCheck(viewCheck);
+		//비공개된 내용은 Setter, Getter로 바꾼다
 	}
-
-	public int getId() {
+	// get은 값을 가져오는 행위
+	// return 으로 값을 private 에 있는 값에 저장하게 해준다
+	
+	// set은 이미 들어있는 값을 수정하는 행위
+	// App의 modify 수정하는 곳에서 사용되며 말 그대로 "설정"하는 기능
+	public int getId() { 
 		return id;
 	}
 

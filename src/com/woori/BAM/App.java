@@ -10,12 +10,15 @@ import com.woori.BAM.util.Util;
 public class App {
 
 	// static 제거 하는 이유?
-	List<Article> articles;
-	int lastArticleId; // 게시글 번호, 마지막 게시글 번호 수정
+	
+	List<Article> articles; // List 타입의 articles
+	int lastArticleId; 
+	// 게시글 번호, 마지막 게시글 번호 수정
 	// 시작하자마자 선언 및 초기화
 
-	App() { // 기본 생성자, 초기화, 관례 and 가독성 증가
-		articles = new ArrayList<>();
+	// 기본 생성자, 초기화, 관례 and 가독성 증가
+	App() { 
+		articles = new ArrayList<>(); // 데이터의 구조 ArrayList 형태 객체가 생성
 		lastArticleId = 1;
 	}
 
