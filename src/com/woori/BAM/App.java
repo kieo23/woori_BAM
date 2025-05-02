@@ -11,8 +11,8 @@ public class App {
 
 	// static 제거 하는 이유?
 	
-	List<Article> articles; // List 타입의 articles
-	int lastArticleId; 
+	private List<Article> articles; // List 타입의 articles
+	private int lastArticleId; 
 	// 게시글 번호, 마지막 게시글 번호 수정
 	// 시작하자마자 선언 및 초기화
 
@@ -38,8 +38,8 @@ public class App {
 				break;
 			}
 
-			int id = 0;
-			Article foundArticle = null;
+//			int id = 0;
+//			Article foundArticle = null;
 
 			if (cmd.length() == 0) {
 				System.out.println("명령어를 입력해 주세요");
@@ -78,26 +78,16 @@ public class App {
 							article.getTitle(), article.getBody(), article.getRegDate(), article.getViewCheck());
 				}
 			} else if (cmd.startsWith("article detail ")) { // article detail 로 시작하니?
-				String[] cmdBits = cmd.split(" "); // 문자 쪼개기칸
-				try { // Exception ㅂ라생 할 예상 코드 블럭
-					id = Integer.parseInt(cmdBits[2]);
-//					checkIdNum = id;
-
-				} catch (NumberFormatException e) {
-					// Number로 생기는 오류를 처리
-					System.out.println("조회하는 게시물의 숫자가 입력되지 않음.");
+				
+				int id = getCmdId(cmd); 
+				
+				// cmdId가 0으로 리턴시 처리 로직 보강
+				if (id == 0) {
 					continue;
-				} catch (Exception e) { // 모든 예외처리 가능 혹시 몰라 써두기
-					e.printStackTrace();
 				}
-
-				for (Article article : articles) {
-
-					if (article.getId() == id) {
-						foundArticle = article; // 부른 cmdbits가 맞다면 null값을 덮어씀
-						break;
-					}
-				}
+				
+				Article foundArticle = getArticleById(id);
+				
 
 				if (foundArticle == null) {
 					System.out.println(id + "번에 해당하는 게시물 없음");
@@ -112,60 +102,48 @@ public class App {
 				System.out.println("조회수 : " + foundArticle.getViewCheck());
 
 			} else if (cmd.startsWith("article delete ")) {
-				String[] cmdBits = cmd.split(" ");
-				try {
-					id = Integer.parseInt(cmdBits[2]);
-
-				} catch (NumberFormatException e) {
-					System.out.println("삭제할 게시물의 숫자를 입력하세요.");
+				int id = getCmdId(cmd); 
+				
+				if (id == 0) {
 					continue;
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
-				for (Article article : articles) {
-					if (article.getId() == id) {
-						articles.remove(id - 1);
-						System.out.println(id + "번의 게시물이 삭제되었습니다");
-						foundArticle = article;
-						break;
-					}
-				}
+				Article foundArticle = getArticleById(id);
+				
+				
 				if (foundArticle == null) {
 					System.out.println(id + "번 게시물이 존재하지 않습니다.");
 					continue;
-
 				}
+				
+				//객체로 삭제는 되는데 인덱스로는 오류남
+				articles.remove(foundArticle);
+				System.out.println(foundArticle.getId()+"번 게시글을 삭제했습니다.");
+
+				
 
 			} else if (cmd.startsWith("article modify ")) {
-				String[] cmdBits = cmd.split(" ");
-				try {
-					id = Integer.parseInt(cmdBits[2]);
-
-				} catch (NumberFormatException e) {
-					System.out.println("수정 할 게시물의 숫자를 입력하세요.");
+				int id = getCmdId(cmd); 
+				
+				if (id == 0) {
 					continue;
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
+				Article foundArticle = getArticleById(id);
+				
+				
 
-				for (Article article : articles) { // 배열을 순서대로 돌림
-					if (article.getId() == id) { // 순서가 일치할때 해당 인덱스의 정보 수정
-						foundArticle = article; // 주소가 같기에 foundArticle, article 같은 주소가된다
 
-						System.out.printf("수정할 제목 : ");
-						foundArticle.setTitle(sc.nextLine().trim()); // foundArticle와 article는 주소가 같도록 선언함
-						System.out.printf("수정할 내용 : ");
-						article.setBody(sc.nextLine().trim()); // 따라서 불러오는 값은 같음
-
-						System.out.println("수정완료");
-						break;
-
-					}
-				}
 				if (foundArticle == null) {
 					System.out.println(id + "번 게시물이 존재하지 않습니다.");
 					continue;
 				}
+				
+				System.out.printf("수정할 제목 : ");
+				foundArticle.setTitle(sc.nextLine().trim()); // foundArticle와 article는 주소가 같도록 선언함
+				System.out.printf("수정할 내용 : ");
+				foundArticle.setBody(sc.nextLine().trim()); // 따라서 불러오는 값은 같음
+				
+				System.out.println("수정완료");
+				continue;
 			} else {
 				System.out.println("존재하지 않는 명령어 입니다");
 			}
@@ -175,9 +153,35 @@ public class App {
 		System.out.println("== 프로그램 종료 ==");
 	}
 
+	private Article getArticleById(int id) {
+		for (Article article : articles) {
+
+			if (article.getId() == id) {
+				return article; // 부른 cmdbits가 맞다면 null값을 덮어씀
+			}
+		}
+		return null;
+	}
+
+	private int getCmdId(String cmd) {
+		
+		String[] cmdBits = cmd.split(" "); // 문자 쪼개기칸
+		try { // Exception ㅂ라생 할 예상 코드 블럭
+			int id = Integer.parseInt(cmdBits[2]);
+			return id;
+		} catch (NumberFormatException e) {
+			// Number로 생기는 오류를 처리
+			System.out.println("명령어가 올바르지 않습니다.");
+			return 0;
+			
+	}
+		
+	}
+
 	private void makeTestData() {
 //	Article ar = new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용2", 10);
-
+		System.out.println("5개의 test data가 생성되었습니다.");
+		
 		// 10번 반복
 		for (int i = 1; i <= 5; i++) {
 			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
